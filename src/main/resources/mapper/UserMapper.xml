@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uts3back.mapper.UsersMapper">
+    <insert id="insertUser" parameterType="com.uts3back.dto.UsersDTO">
+        INSERT INTO Users (email, password, privacyCheck, useLevel, telNumber)
+        VALUES (#{email}, #{password}, #{privacyCheck}, #{useLevel}, #{telNumber})
+    </insert>
+</mapper>

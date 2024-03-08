@@ -1,4 +1,4 @@
-package com.uts3back.users;
+package com.uts3back.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
