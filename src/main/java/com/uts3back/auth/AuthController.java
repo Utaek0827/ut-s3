@@ -18,6 +18,7 @@ public class AuthController {
     public String signUp(
             @RequestBody UsersDTO SignUpUsers
             ){
+
         System.out.println(SignUpUsers);
         return "email+password";
     }
