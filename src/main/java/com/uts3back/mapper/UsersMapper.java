@@ -9,5 +9,7 @@ public interface UsersMapper {
 
     void insertUser(UsersDTO usersDTO);
 
+    UsersDTO userEmailCheck(String userEmail);
+
 
 }

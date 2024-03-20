@@ -7,4 +7,9 @@
         INSERT INTO Users (email, password, privacyCheck, useLevel, telNumber)
         VALUES (#{email}, #{password}, #{privacyCheck}, #{useLevel}, #{telNumber})
     </insert>
+
+    <select id="userEmailCheck" resultType="com.uts3back.dto.UsersDTO">
+        SELECT * FROM Users WHERE email = #{userEmail}
+    </select>
+
 </mapper>

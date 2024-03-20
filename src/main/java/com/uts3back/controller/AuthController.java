@@ -3,6 +3,7 @@ package com.uts3back.controller;
 import com.uts3back.dto.UsersDTO;
 import com.uts3back.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,10 +14,18 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/SignIn")
-    public String signIn(
+    public ResponseEntity<String> signIn(
+            @RequestBody UsersDTO SignInUsers
             ){
-        System.out.println("ㅁㄴㅇㄹㅁ");
-        return "email+password";
+
+        UsersDTO logInUsers = authService.userEmailCheck(SignInUsers.getEmail());
+
+        if(logInUsers != null && authService.userPwCheck(logInUsers, SignInUsers.getPassword())){
+            return ResponseEntity.ok("로그인 성공");
+        }
+        System.out.println(logInUsers);
+
+        return ResponseEntity.ok("로그인 실패");
     }
 
     @PostMapping("/SignUp")
@@ -28,6 +37,8 @@ public class AuthController {
         System.out.println(SignUpUsers);
         return "email+password";
     }
+
+
 
 }
 
