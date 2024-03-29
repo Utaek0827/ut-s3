@@ -18,6 +18,7 @@ public class AuthController {
             @RequestBody UsersDTO SignInUsers
             ){
 
+        System.out.println(SignInUsers);
         UsersDTO logInUsers = authService.userEmailCheck(SignInUsers.getEmail());
 
         if(logInUsers != null && authService.userPwCheck(logInUsers, SignInUsers.getPassword())){

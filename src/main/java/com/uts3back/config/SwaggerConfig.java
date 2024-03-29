@@ -17,11 +17,12 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi chatOpenApi() {
-        String[] paths = {"/v1/**"};
+        String[] paths = {"/**/"};
 
         return GroupedOpenApi.builder()
                 .group("ut-s3 v1")
                 .pathsToMatch(paths)
+
                 .build();
     }
 }

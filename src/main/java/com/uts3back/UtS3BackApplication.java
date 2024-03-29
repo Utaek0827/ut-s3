@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.uts3back.controller","com.uts3back.service","com.uts3back.mapper","com.uts3back.config"})
+@ComponentScan(basePackages = {"com.uts3back.**"})
 public class UtS3BackApplication {
 
     public static void main(String[] args) {
