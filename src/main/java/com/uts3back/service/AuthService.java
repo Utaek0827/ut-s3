@@ -49,6 +49,7 @@ public class AuthService implements UserDetailsService {
             return  new CustomUserDetails(usersDTO);
         }
 
-        return null;
+        // 아이디가 없을 경우 빈 유저객체 반환
+        return new CustomUserDetails(new UsersDTO());
     }
 }
