@@ -18,6 +18,8 @@ spring:
     username: ${DB_USERNAME:root}
     # 데이터베이스 접속을 위한 암호 설정 (기본값: password)
     password: ${DB_PASSWORD:password}
+  jwt:
+    secret: ${JWT_KEY}
   servlet:
     multipart:
       # 업로드할 파일의 최대 크기 설정 (단일 파일 및 요청당 최대 크기)
