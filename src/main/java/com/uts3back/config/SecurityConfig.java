@@ -1,5 +1,6 @@
 package com.uts3back.config;
 
+import com.uts3back.jwt.JWTFilter;
 import com.uts3back.jwt.JWTUtil;
 import com.uts3back.jwt.LoginFilter;
 import org.springframework.context.annotation.Bean;
@@ -61,11 +62,15 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**", "/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/users/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/auth/test/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
 
                         //.requestMatchers("/admin").hasRole("ADMIN") // 롤 부여시 설정
                         .anyRequest().authenticated()); // 그 외의 요청은 인증된 사용자만 접근 가능
+        //JWTFilter 등록
+        http
+                .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
 
         //필터 추가 LoginFilter()는 인자를 받음 (AuthenticationManager() 메소드에 authenticationConfiguration 객체를 넣어야 함) 따라서 등록 필요
         http

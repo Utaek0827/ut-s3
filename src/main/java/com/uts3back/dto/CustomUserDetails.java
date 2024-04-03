@@ -21,10 +21,15 @@ public class CustomUserDetails implements UserDetails {
         collection.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return usersDTO.getUseLevel()+"";
+
+                return usersDTO.getRole();
+
             }
         });
 
+        for (GrantedAuthority authority : collection) {
+            System.out.println(authority.getAuthority());
+        }
         return collection;
     }
 

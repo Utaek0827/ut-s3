@@ -8,7 +8,7 @@ public class UsersDTO {
     String email;
     String password;
     boolean privacyCheck;
-    int useLevel;
+    String role;
     String telNumber;
 
 

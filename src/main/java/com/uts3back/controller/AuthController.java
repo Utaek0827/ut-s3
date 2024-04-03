@@ -18,7 +18,6 @@ public class AuthController {
             @RequestBody UsersDTO SignInUsers
             ){
 
-        System.out.println(SignInUsers);
         UsersDTO logInUsers = authService.userEmailCheck(SignInUsers.getEmail());
 
         if(logInUsers != null && authService.userPwCheck(logInUsers, SignInUsers.getPassword())){
@@ -37,6 +36,13 @@ public class AuthController {
         authService.signUp(SignUpUsers);
         System.out.println(SignUpUsers);
         return "email+password";
+    }
+
+    @GetMapping("/ttt")
+    public String ttt(String msg){
+
+        System.out.println("관리자 확인");
+        return msg;
     }
 
 
