@@ -25,7 +25,7 @@ public class AuthService implements UserDetailsService {
 
     public void signUp(UsersDTO usersDTO) {
         usersDTO.setPassword(bCryptPasswordEncoder.encode(usersDTO.getPassword()));
-        usersDTO.setRole("USER");
+        usersDTO.setRole("ROLE_USER");
         usersMapper.insertUser(usersDTO);
     }
 

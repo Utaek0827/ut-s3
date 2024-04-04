@@ -25,8 +25,8 @@ public class SwaggerConfig {
                 .addSecurityItem(new SecurityRequirement().addList(SECURITY_SCHEME_NAME))
                 // 여기까지
                 .info(new Info()
-                        .title("스프링시큐리티 + JWT 예제")
-                        .description("스프링시큐리티와 JWT를 이용한 사용자 인증 예제입니다.")
+                        .title("yt-s3")
+                        .description("이미지, 영상 저장용 서버입니다.")
                         .version("1.0.0"));
     }
 }
