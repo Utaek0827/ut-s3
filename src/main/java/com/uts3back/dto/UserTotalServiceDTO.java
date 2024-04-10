@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class UserServiceDTO {
+public class UserTotalServiceDTO {
 
     String usID;
     String email;

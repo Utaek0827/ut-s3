@@ -1,22 +1,27 @@
 package com.uts3back.service;
 
-import com.uts3back.dto.UserServiceDTO;
-import com.uts3back.mapper.UserServiceMapper;
+import com.uts3back.dto.UserTotalServiceDTO;
+import com.uts3back.dto.UsersServiceDTO;
+import com.uts3back.mapper.UserTotalServiceMapper;
+import com.uts3back.mapper.UsersMapper;
+import com.uts3back.mapper.UsersServiceMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserService {
 
-    private final UserServiceMapper userServiceMapper;
+    private final UserTotalServiceMapper userTotalServiceMapper;
+    private final UsersServiceMapper usersServiceMapper;
 
-    public UserService(UserServiceMapper userServiceMapper) {
-        this.userServiceMapper = userServiceMapper;
+    public UserService(UserTotalServiceMapper userTotalServiceMapper, UsersServiceMapper usersServiceMapper) {
+        this.userTotalServiceMapper = userTotalServiceMapper;
+        this.usersServiceMapper = usersServiceMapper;
+
     }
 
-    public List<UserServiceDTO> getUserServices(String email) {
-        return userServiceMapper.userServiceFind(email);
+    public List<UsersServiceDTO> getUsersServices(String email) {
+        return usersServiceMapper.usersServiceFind(email);
     }
 }
