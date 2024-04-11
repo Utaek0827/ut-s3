@@ -4,8 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.uts3back.mapper.UsersServiceMapper">
 
-    <select id="usersServiceFind" resultType="com.uts3back.dto.UsersServiceDTO">
+    <select id="usersServiceListFind" resultType="com.uts3back.dto.UsersServiceDTO">
         SELECT * FROM UsersService WHERE email = #{email}
     </select>
+
+    <select id="usersServiceFind" resultType="com.uts3back.dto.UsersServiceDTO">
+        SELECT * FROM UsersService WHERE userServiceID = #{userServiceID}
+    </select>
+
+    <insert id="insertUsersService" parameterType="com.uts3back.dto.UsersServiceDTO">
+        INSERT INTO UsersService (userServiceID, email, userServiceKey, userServiceInfo, userServiceName)
+        VALUES (#{userServiceID}, #{email}, #{userServiceKey}, #{userServiceInfo}, #{userServiceName})
+    </insert>
 
 </mapper>

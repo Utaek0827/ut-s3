@@ -16,14 +16,14 @@ public class UsersController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/Dashboard")
-    public List<UsersServiceDTO> Dashboard(String msg){
+    @GetMapping("/dashboard")
+    public List<UsersServiceDTO> Dashboard(){
 
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
 
-        System.out.println(name);
-        List<UsersServiceDTO> usersServices = userService.getUsersServices(name);
+        System.out.println(email);
+        List<UsersServiceDTO> usersServices = userService.getUsersServicesList(email);
 
         System.out.println(usersServices);
         for (UsersServiceDTO userService : usersServices) {
@@ -31,6 +31,10 @@ public class UsersController {
         }
         return usersServices;
     }
+
+
+
+
 
 
 }

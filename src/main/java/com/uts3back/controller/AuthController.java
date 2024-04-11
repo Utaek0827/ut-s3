@@ -13,7 +13,7 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @PostMapping("/SignIn")
+    @PostMapping("/signIn")
     public ResponseEntity<String> signIn(
             @RequestBody UsersDTO SignInUsers
             ){
@@ -28,7 +28,7 @@ public class AuthController {
         return ResponseEntity.ok("로그인 실패");
     }
 
-    @PostMapping("/SignUp")
+    @PostMapping("/signUp")
     public String signUp(
             @RequestBody UsersDTO SignUpUsers
             ){

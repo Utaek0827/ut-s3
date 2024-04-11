@@ -9,7 +9,9 @@ import java.util.List;
 @Mapper
 public interface UsersServiceMapper {
 
-    List<UsersServiceDTO> usersServiceFind(String email);
+    List<UsersServiceDTO> usersServiceListFind(String email);
 
+    UsersServiceDTO usersServiceFind(String userServiceID);
 
+    void insertUsersService(UsersServiceDTO insertUSDTO);
 }
