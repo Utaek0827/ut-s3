@@ -34,13 +34,14 @@ public class UserService {
     }
 
 
-    public void insertUserService(String email, String userServiceName, String userServiceInfo) {
+    public String insertUserService(String email, String userServiceName, String userServiceInfo) {
 
+        if(usersServiceMapper.checkUsersServiceName(userServiceName) != null){
+            return null;
+        }
         System.out.println("key: "+key);
         String userServiceID = email + '_' + userServiceName.hashCode() + "_" + UUID.randomUUID().toString();
-        String userServiceKEY = email + '_' + userServiceName.hashCode() + "_" + key + "_" + UUID.randomUUID().toString();
-
-
+        String userServiceKEY = UUID.randomUUID().toString();
 
         System.out.println("userServiceID:"+userServiceID);
         System.out.println("userServiceKEY:"+userServiceKEY);
@@ -54,6 +55,13 @@ public class UserService {
 
         usersServiceMapper.insertUsersService(insertUSDTO);
 
+        return "ok";
+    }
+
+    public void deleteUserService(String userServiceID){
+
+        usersServiceMapper.deleteUsersService(userServiceID);
 
     }
+
 }

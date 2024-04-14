@@ -17,4 +17,13 @@
         VALUES (#{userServiceID}, #{email}, #{userServiceKey}, #{userServiceInfo}, #{userServiceName})
     </insert>
 
+    <select id="checkUsersServiceName" resultType="com.uts3back.dto.UsersServiceDTO">
+        SELECT * FROM UsersService WHERE userServiceName = #{userServiceName}
+    </select>
+
+    <delete id="deleteUsersService" parameterType="String">
+        DELETE FROM UsersService WHERE userServiceID = #{userServiceID}
+    </delete>
+
+
 </mapper>

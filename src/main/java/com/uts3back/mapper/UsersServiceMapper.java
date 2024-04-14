@@ -14,4 +14,11 @@ public interface UsersServiceMapper {
     UsersServiceDTO usersServiceFind(String userServiceID);
 
     void insertUsersService(UsersServiceDTO insertUSDTO);
+
+    UsersServiceDTO checkUsersServiceName(String userServiceName);
+
+    void deleteUsersService(String userServiceID);
+
+
+
 }

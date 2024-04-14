@@ -2,6 +2,7 @@ package com.uts3back.controller;
 
 import com.uts3back.dto.UsersServiceDTO;
 import com.uts3back.service.UserService;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,16 +21,32 @@ public class UserServiceController {
     }
 
     @PostMapping("userService")
-    public ResponseEntity<String> userService(
+    public ResponseEntity<String> insertUserService(
             @RequestParam("userServiceName")String userServiceName,
             @RequestParam("userServiceInfo")String userServiceInfo){
 
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        userService.insertUserService(email, userServiceName, userServiceInfo);
-
+        if(userService.insertUserService(email, userServiceName, userServiceInfo) == null){
+            return ResponseEntity.ok("서비스 생성 실패");
+        }
         return ResponseEntity.ok("서비스 생성 성공");
     }
 
+    @DeleteMapping("userService")
+    public ResponseEntity<String> deleteUserService(
+            @RequestParam("userServiceID")String userServiceID
+    ){
+        userService.deleteUserService(userServiceID);
+        return ResponseEntity.ok("서비스 삭제 성공");
+    }
+
+    @PutMapping("userService")
+    public ResponseEntity<String> updateUserService(
+            @RequestParam("userServiceID")String userServiceID
+    ){
+        userService.deleteUserService(userServiceID);
+        return ResponseEntity.ok("서비스 삭제 성공");
+    }
 
 
 }
