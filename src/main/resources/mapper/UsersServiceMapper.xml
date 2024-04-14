@@ -17,13 +17,23 @@
         VALUES (#{userServiceID}, #{email}, #{userServiceKey}, #{userServiceInfo}, #{userServiceName})
     </insert>
 
-    <select id="checkUsersServiceName" resultType="com.uts3back.dto.UsersServiceDTO">
-        SELECT * FROM UsersService WHERE userServiceName = #{userServiceName}
+    <select id="checkUsersServiceID" resultType="com.uts3back.dto.UsersServiceDTO">
+        SELECT * FROM UsersService WHERE userServiceID = #{userServiceID}
     </select>
 
     <delete id="deleteUsersService" parameterType="String">
         DELETE FROM UsersService WHERE userServiceID = #{userServiceID}
     </delete>
+
+    <update id="updateUsersService" parameterType="com.uts3back.dto.UsersServiceDTO">
+        UPDATE UsersService
+        SET email = #{email},
+            userServiceKey = #{userServiceKey},
+            userServiceInfo = #{userServiceInfo},
+            userServiceName = #{userServiceName}
+        WHERE userServiceID = #{userServiceID}
+    </update>
+
 
 
 </mapper>

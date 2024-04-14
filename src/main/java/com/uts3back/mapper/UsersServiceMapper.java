@@ -15,10 +15,9 @@ public interface UsersServiceMapper {
 
     void insertUsersService(UsersServiceDTO insertUSDTO);
 
-    UsersServiceDTO checkUsersServiceName(String userServiceName);
+    UsersServiceDTO checkUsersServiceID(String userServiceID);
 
     void deleteUsersService(String userServiceID);
 
-
-
+    void updateUsersService(UsersServiceDTO usersServiceDTO);
 }

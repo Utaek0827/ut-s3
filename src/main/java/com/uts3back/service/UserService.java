@@ -1,6 +1,7 @@
 package com.uts3back.service;
 
 import com.uts3back.dto.UserTotalServiceDTO;
+import com.uts3back.dto.UsersDTO;
 import com.uts3back.dto.UsersServiceDTO;
 import com.uts3back.mapper.UserTotalServiceMapper;
 import com.uts3back.mapper.UsersMapper;
@@ -36,12 +37,14 @@ public class UserService {
 
     public String insertUserService(String email, String userServiceName, String userServiceInfo) {
 
-        if(usersServiceMapper.checkUsersServiceName(userServiceName) != null){
-            return null;
-        }
+
         System.out.println("key: "+key);
         String userServiceID = email + '_' + userServiceName.hashCode() + "_" + UUID.randomUUID().toString();
         String userServiceKEY = UUID.randomUUID().toString();
+
+        if(usersServiceMapper.checkUsersServiceID(userServiceID) != null){
+            return null;
+        }
 
         System.out.println("userServiceID:"+userServiceID);
         System.out.println("userServiceKEY:"+userServiceKEY);
@@ -64,4 +67,16 @@ public class UserService {
 
     }
 
+    public void updateUserService(String userServiceID, String userServiceInfo) {
+
+        if(usersServiceMapper.checkUsersServiceID(userServiceID) == null){
+            return;
+        }
+
+        UsersServiceDTO usersServiceDTO =  usersServiceMapper.usersServiceFind(userServiceID);
+        usersServiceDTO.setUserServiceInfo(userServiceInfo);
+
+
+        usersServiceMapper.updateUsersService(usersServiceDTO);
+    }
 }

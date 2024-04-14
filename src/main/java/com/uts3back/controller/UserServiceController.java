@@ -20,6 +20,7 @@ public class UserServiceController {
         return userService.getUsersService(userServiceID);
     }
 
+    // 생성
     @PostMapping("userService")
     public ResponseEntity<String> insertUserService(
             @RequestParam("userServiceName")String userServiceName,
@@ -32,6 +33,7 @@ public class UserServiceController {
         return ResponseEntity.ok("서비스 생성 성공");
     }
 
+    // 삭제
     @DeleteMapping("userService")
     public ResponseEntity<String> deleteUserService(
             @RequestParam("userServiceID")String userServiceID
@@ -40,12 +42,15 @@ public class UserServiceController {
         return ResponseEntity.ok("서비스 삭제 성공");
     }
 
+    // 수정
     @PutMapping("userService")
     public ResponseEntity<String> updateUserService(
-            @RequestParam("userServiceID")String userServiceID
+            @RequestParam("userServiceID")String userServiceID,
+            @RequestParam("userServiceInfo")String userServiceInfo
+
     ){
-        userService.deleteUserService(userServiceID);
-        return ResponseEntity.ok("서비스 삭제 성공");
+        userService.updateUserService(userServiceID,userServiceInfo);
+        return ResponseEntity.ok("서비스 수정 성공");
     }
 
 
