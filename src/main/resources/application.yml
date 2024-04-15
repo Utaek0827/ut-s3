@@ -36,3 +36,14 @@ mybatis:
   type-aliases-package: com.uts3back
   # MyBatis 매퍼 XML 파일의 위치 지정
   mapper-locations: classpath:mapper/*.xml
+
+MultipartFile:
+  type: object
+  properties:
+    contentType:
+      type: string
+    size:
+      type: integer
+    file:
+      type: string
+      format: binary
