@@ -12,7 +12,7 @@ public class ImagesDTO {
     String imgOriName;
     String imgChanName;
     String imgExt;
-    Date imgUptime;
-    int imgSize;
+    String imgUptime;
+    long imgSize;
 
 }
