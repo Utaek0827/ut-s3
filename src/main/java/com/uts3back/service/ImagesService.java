@@ -13,14 +13,14 @@ import java.nio.file.Path;
 import java.util.UUID;
 
 @Service
-public class FileService {
+public class ImagesService {
 
     @Value("${yts3.directory}")
     private String imageUploadDirectory;
 
     final private ImagesMapper imagesMapper;
 
-    public FileService(ImagesMapper imagesMapper) {
+    public ImagesService(ImagesMapper imagesMapper) {
         this.imagesMapper = imagesMapper;
     }
 
