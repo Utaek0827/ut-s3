@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URLConnection;
+
 @RestController
 @RequestMapping("/image")
 public class ViewImgController {
@@ -22,10 +24,14 @@ public class ViewImgController {
     public ResponseEntity viewImg(@PathVariable String imgID) throws Exception {
         Resource resource = imagesService.viewImage(imgID);
 
+        String mimeType = URLConnection.guessContentTypeFromName(resource.getFile().getName());
+        System.out.println(mimeType);
+
+
         if(resource != null){
             return ResponseEntity.ok()
                     // 이미지의 MIME 타입을 명시함
-                    .header("Content-Type", "image/jpg")
+                    .header("Content-Type", mimeType)
                     .body(resource);
         } else {
             // 존재하지 않을 경우, "Not Found" 상태 코드를 반환함

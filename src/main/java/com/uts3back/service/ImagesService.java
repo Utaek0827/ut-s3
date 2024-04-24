@@ -2,6 +2,7 @@ package com.uts3back.service;
 
 import com.uts3back.dto.ImagesDTO;
 import com.uts3back.mapper.ImagesMapper;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -14,6 +15,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -78,13 +80,56 @@ public class ImagesService {
     }
 
     // 수정 메서드 추가
-    public void updateImage(String imgID, ImagesDTO imagesDTO) {
-        imagesMapper.updateImage(imgID, imagesDTO);
+    public void updateImage(String imgID, MultipartFile file) {
+
+        System.out.println(imgID +  file.getOriginalFilename());
+        ImagesDTO imagesDTO = getImage(imgID); // 이미지 정보를 가져옴
+        String imgUptime = String.valueOf(System.currentTimeMillis());
+        long imgSize = file.getSize();
+
+        Path imagePath = Paths.get(imageUploadDirectory +"/" + imagesDTO.getImgChanName() + "." + imagesDTO.getImgExt());
+
+        try {
+            // 기존파일 삭제
+            Files.deleteIfExists(imagePath);
+            // 수정파일 저장
+            Path filePath = FileSystems.getDefault().getPath(imageUploadDirectory +"/", imagesDTO.getImgChanName()+ "." + imagesDTO.getImgExt());
+            file.transferTo(filePath);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        imagesDTO.setImgSize(imgSize);
+        imagesDTO.setImgUptime(imgUptime);
+
+        // 수정파일 원본이름 저장
+        String originalFilename = file.getOriginalFilename();
+        int lastDotIndex = originalFilename.lastIndexOf(".");
+        String originalFilenameWithoutExtension = (lastDotIndex != -1) ? originalFilename.substring(0, lastDotIndex) : originalFilename;
+        imagesDTO.setImgOriName(originalFilenameWithoutExtension);
+
+        System.out.println(imagesDTO);
+
+        imagesMapper.updateImage(imagesDTO);
     }
 
     // 삭제 메서드 추가
-    public void deleteImage(String imgID) {
-        imagesMapper.deleteImage(imgID);
+    public boolean deleteImage(String imgID) {
+
+        ImagesDTO imagesDTO = getImage(imgID); // 이미지 정보를 가져옴
+
+        // 이미지 파일 경로 생성
+        Path imagePath = Paths.get(imageUploadDirectory +"/" + imagesDTO.getImgChanName() + "." + imagesDTO.getImgExt());
+
+        // 파일 삭제 시도
+        try {
+            Files.deleteIfExists(imagePath);
+            imagesMapper.deleteImage(imgID);
+            return true; // 파일 삭제 성공
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false; // 파일 삭제 실패
+        }
     }
 
     // 조회 메서드 추가
@@ -92,18 +137,26 @@ public class ImagesService {
         return imagesMapper.getImage(imgID);
     }
 
+    public List<ImagesDTO> getImagesByServiceID(String serviceID, int page, int size) {
+        int offset = page * size;
+        RowBounds rowBounds = new RowBounds(offset, size);
+        return imagesMapper.getImagesByServiceID(serviceID, rowBounds);
+    }
+
+
 
     public Resource viewImage(String imgID) throws Exception {
 
-        Path imagePath = Paths.get(imageUploadDirectory +"/" +imgID + ".jpg");
+        ImagesDTO imagesDTO = getImage(imgID);
+
+
+        Path imagePath = Paths.get(imageUploadDirectory +"/" +imagesDTO.getImgChanName() + "." + imagesDTO.getImgExt());
         Resource resource = new UrlResource(imagePath.toUri());
         System.out.println(resource);
 
         if(resource.exists()){
-            // 존재할 경우, HTTP 응답으로 이미지를 반환함
             return resource;
         } else {
-            // 존재하지 않을 경우, "Not Found" 상태 코드를 반환함
             return null;
         }
 

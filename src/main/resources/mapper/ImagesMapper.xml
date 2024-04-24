@@ -11,8 +11,7 @@
     <!-- 수정 기능 추가 -->
     <update id="updateImage" parameterType="com.uts3back.dto.ImagesDTO">
         UPDATE Images
-        SET serviceID = #{serviceID},
-            imgOriName = #{imgOriName},
+        SET imgOriName = #{imgOriName},
             imgChanName = #{imgChanName},
             imgExt = #{imgExt},
             imgUptime = #{imgUptime},
@@ -31,6 +30,13 @@
         SELECT * FROM Images
         WHERE imgID = #{imgID}
     </select>
+
+    <select id="getImagesByServiceID" parameterType="java.lang.String" resultType="com.uts3back.dto.ImagesDTO">
+        SELECT * FROM Images
+        WHERE serviceID = #{serviceID}
+        ORDER BY imgUptime DESC
+    </select>
+
 
 
 </mapper>
