@@ -8,6 +8,29 @@
         VALUES (#{imgID}, #{serviceID}, #{imgOriName}, #{imgChanName}, #{imgExt}, #{imgUptime}, #{imgSize})
     </insert>
 
+    <!-- 수정 기능 추가 -->
+    <update id="updateImage" parameterType="com.uts3back.dto.ImagesDTO">
+        UPDATE Images
+        SET serviceID = #{serviceID},
+            imgOriName = #{imgOriName},
+            imgChanName = #{imgChanName},
+            imgExt = #{imgExt},
+            imgUptime = #{imgUptime},
+            imgSize = #{imgSize}
+        WHERE imgID = #{imgID}
+    </update>
+
+    <!-- 삭제 기능 추가 -->
+    <delete id="deleteImage" parameterType="java.lang.String">
+        DELETE FROM Images
+        WHERE imgID = #{imgID}
+    </delete>
+
+    <!-- 조회 기능 추가 -->
+    <select id="getImage" parameterType="java.lang.String" resultType="com.uts3back.dto.ImagesDTO">
+        SELECT * FROM Images
+        WHERE imgID = #{imgID}
+    </select>
 
 
 </mapper>

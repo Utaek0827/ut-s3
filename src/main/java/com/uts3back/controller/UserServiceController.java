@@ -17,8 +17,8 @@ public class UserServiceController {
     UserService userService;
 
     @Operation(summary = "사용자 서비스 정보 조회", description = "사용자 서비스 ID를 통해 해당 서비스 정보를 조회합니다.")
-    @GetMapping("userService")
-    public UsersServiceDTO userService(@RequestParam("userServiceID")String userServiceID){
+    @GetMapping("/{userServiceID}")
+    public UsersServiceDTO userService(@PathVariable("userServiceID")String userServiceID){
         return userService.getUsersService(userServiceID);
     }
 
@@ -36,9 +36,9 @@ public class UserServiceController {
     }
 
     @Operation(summary = "사용자 서비스 삭제", description = "사용자 서비스 ID를 통해 해당 서비스 정보를 삭제")
-    @DeleteMapping("userService")
+    @DeleteMapping("/{userServiceID}")
     public ResponseEntity<String> deleteUserService(
-            @RequestParam("userServiceID")String userServiceID
+            @PathVariable("userServiceID")String userServiceID
     ){
         userService.deleteUserService(userServiceID);
         return ResponseEntity.ok("서비스 삭제 성공");

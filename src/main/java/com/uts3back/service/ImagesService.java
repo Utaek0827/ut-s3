@@ -3,13 +3,17 @@ package com.uts3back.service;
 import com.uts3back.dto.ImagesDTO;
 import com.uts3back.mapper.ImagesMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
@@ -28,7 +32,9 @@ public class ImagesService {
     public void uploadFileService(MultipartFile file, String userServiceID) throws IOException {
 
 
-        String saveDirectory  = System.getProperty("user.dir") + "/images/" + userServiceID;
+        //String saveDirectory  = System.getProperty("user.dir") + "/" +imageUploadDirectory+ "/" + userServiceID;
+        String saveDirectory  = System.getProperty("user.dir") + "/" +imageUploadDirectory;
+
 
         // 서비스이름으로된 폴더가 없을 경우 새로운 폴더생성
         if (!Files.exists(FileSystems.getDefault().getPath(saveDirectory))) {
@@ -71,7 +77,35 @@ public class ImagesService {
 
     }
 
+    // 수정 메서드 추가
+    public void updateImage(String imgID, ImagesDTO imagesDTO) {
+        imagesMapper.updateImage(imgID, imagesDTO);
+    }
+
+    // 삭제 메서드 추가
+    public void deleteImage(String imgID) {
+        imagesMapper.deleteImage(imgID);
+    }
+
+    // 조회 메서드 추가
+    public ImagesDTO getImage(String imgID) {
+        return imagesMapper.getImage(imgID);
+    }
 
 
+    public Resource viewImage(String imgID) throws Exception {
 
+        Path imagePath = Paths.get(imageUploadDirectory +"/" +imgID + ".jpg");
+        Resource resource = new UrlResource(imagePath.toUri());
+        System.out.println(resource);
+
+        if(resource.exists()){
+            // 존재할 경우, HTTP 응답으로 이미지를 반환함
+            return resource;
+        } else {
+            // 존재하지 않을 경우, "Not Found" 상태 코드를 반환함
+            return null;
+        }
+
+    }
 }

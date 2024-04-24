@@ -65,6 +65,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/users/**").hasAnyRole("ADMIN","USER")
                         .requestMatchers("/api/v1/auth/test/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/image/**").permitAll()
 
                         //.requestMatchers("/admin").hasRole("ADMIN") // 롤 부여시 설정
                         .anyRequest().authenticated()); // 그 외의 요청은 인증된 사용자만 접근 가능
