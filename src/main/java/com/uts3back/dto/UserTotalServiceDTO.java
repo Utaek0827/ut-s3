@@ -9,7 +9,6 @@ public class UserTotalServiceDTO {
 
     String usID;
     String email;
-    String serviceID;
     int userTotalCap;
     int userUsageCap;
     Date userStartDate;

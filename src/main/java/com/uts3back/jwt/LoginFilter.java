@@ -27,7 +27,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
 
         //System.out.println("로그인 필터 생성");
-        setFilterProcessesUrl("/api/v1/auth/signIn");
+        setFilterProcessesUrl("/api/v1/auth/sign-in");
         this.jwtUtil = jwtUtil;
         //setUsernameParameter("email");
 

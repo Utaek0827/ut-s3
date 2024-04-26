@@ -21,24 +21,24 @@ public class ImagesController {
     @PostMapping(value = "/upload" , consumes = {"multipart/form-data"})
     public ResponseEntity<String> imageUpload(
             @RequestPart("file") MultipartFile file,
-            @RequestPart("userServiceID") String userServiceID) throws Exception {
+            @RequestPart("user-service-id") String userServiceID) throws Exception {
 
         imagesService.uploadFileService(file, userServiceID);
         return ResponseEntity.ok("이미지 업로드 성공");
     }
     // 수정 컨트롤러 추가
     @Operation(summary = "이미지 수정", description = "이미지 정보 수정")
-    @PutMapping(value = "/{imgID}", consumes = {"multipart/form-data"})
+    @PutMapping(value = "/{img-id}", consumes = {"multipart/form-data"})
     public ResponseEntity<String> updateImage(
-            @PathVariable("imgID") String imgID,
+            @PathVariable("img-id") String imgID,
             @RequestPart("file") MultipartFile file) {
         imagesService.updateImage(imgID, file);
         return ResponseEntity.ok("이미지 수정 완료");
     }
     // 삭제 컨트롤러 추가
     @Operation(summary = "이미지 삭제", description = "이미지 삭제")
-    @DeleteMapping("/{imgID}")
-    public ResponseEntity<String> deleteImage(@PathVariable("imgID") String imgID) {
+    @DeleteMapping("/{img-id}")
+    public ResponseEntity<String> deleteImage(@PathVariable("img-id") String imgID) {
         if(imagesService.deleteImage(imgID)){
             return ResponseEntity.ok("이미지 삭제 완료");
         }else{
@@ -48,15 +48,15 @@ public class ImagesController {
 
     // 조회 컨트롤러 추가
     @Operation(summary = "이미지 조회", description = "이미지 정보 조회")
-    @GetMapping("/{imgID}")
-    public ResponseEntity<ImagesDTO> getImage(@PathVariable("imgID") String imgID) {
-        ImagesDTO image = imagesService.getImage(imgID);
-        return ResponseEntity.ok(image);
+    @GetMapping("/{img-id}")
+    public ResponseEntity<ImagesDTO> getImage(@PathVariable("img-id") String imgID) {
+        ImagesDTO imagesDTO = imagesService.getImage(imgID);
+        return ResponseEntity.ok(imagesDTO);
     }
 
     @Operation(summary = "이미지 리스트 조회", description = "서비스 ID를 이용한 이미지 정보 리스트 조회")
-    @GetMapping("/list/{serviceID}")
-    public ResponseEntity<List<ImagesDTO>> getImagesByServiceID(@PathVariable("serviceID") String serviceID,
+    @GetMapping("/list/{service-id}")
+    public ResponseEntity<List<ImagesDTO>> getImagesByServiceID(@PathVariable("service-id") String serviceID,
                                                                 @RequestParam(value = "page", defaultValue = "0") int page,
                                                                 @RequestParam(value = "size", defaultValue = "10") int size) {
         List<ImagesDTO> images = imagesService.getImagesByServiceID(serviceID, page, size);

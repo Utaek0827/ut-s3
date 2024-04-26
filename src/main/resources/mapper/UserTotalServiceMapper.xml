@@ -8,4 +8,11 @@
         SELECT * FROM UserTotalService WHERE email = #{email}
     </select>
 
+    <select id="calculateTotalImageSize" resultType="java.lang.Integer">
+        SELECT SUM(imgSize) FROM Images WHERE ServiceID IN (
+        SELECT userServiceID FROM UsersService WHERE email = #{email}
+        )
+    </select>
+
+
 </mapper>

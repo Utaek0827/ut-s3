@@ -1,5 +1,6 @@
 package com.uts3back.controller;
 
+import com.uts3back.dto.LoginRequest;
 import com.uts3back.dto.UsersDTO;
 import com.uts3back.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,23 +16,18 @@ public class AuthController {
     private AuthService authService;
 
     @Operation(summary = "로그인", description = "로그인 페이지")
-    @PostMapping("/signIn")
+    @PostMapping("/sign-in")
     public ResponseEntity<String> signIn(
-            @RequestBody UsersDTO SignInUsers
+            @RequestBody LoginRequest loginRequest
             ){
 
-        UsersDTO logInUsers = authService.userEmailCheck(SignInUsers.getEmail());
+        // 스웨거 테스트용 컨트롤러
 
-        if(logInUsers != null && authService.userPwCheck(logInUsers, SignInUsers.getPassword())){
-            return ResponseEntity.ok("로그인 성공");
-        }
-        System.out.println(logInUsers);
-
-        return ResponseEntity.ok("로그인 실패");
+        return ResponseEntity.ok("로그인");
     }
 
     @Operation(summary = "회원가입", description = "회원가입 페이지")
-    @PostMapping("/signUp")
+    @PostMapping("/sign-up")
     public String signUp(
             @RequestBody UsersDTO SignUpUsers
             ){
@@ -41,14 +37,21 @@ public class AuthController {
         return "email+password";
     }
 
+    /*
     @GetMapping("/ttt")
     public String ttt(String msg){
 
         System.out.println("관리자 확인");
         return msg;
     }
+    */
+
+
+
+
 
 
 
 }
+
 

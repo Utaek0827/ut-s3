@@ -17,13 +17,13 @@ public class UserServiceController {
     UserService userService;
 
     @Operation(summary = "사용자 서비스 정보 조회", description = "사용자 서비스 ID를 통해 해당 서비스 정보를 조회합니다.")
-    @GetMapping("/{userServiceID}")
-    public UsersServiceDTO userService(@PathVariable("userServiceID")String userServiceID){
+    @GetMapping("/{user-service-id}")
+    public UsersServiceDTO userService(@PathVariable("user-service-id")String userServiceID){
         return userService.getUsersService(userServiceID);
     }
 
     @Operation(summary = "사용자 서비스 생성", description = "사용자 서비스 생성 서비스 이름과 서비스 설명작성")
-    @PostMapping("userService")
+    @PostMapping("user-service")
     public ResponseEntity<String> insertUserService(
             @RequestParam("userServiceName")String userServiceName,
             @RequestParam("userServiceInfo")String userServiceInfo){
@@ -36,16 +36,16 @@ public class UserServiceController {
     }
 
     @Operation(summary = "사용자 서비스 삭제", description = "사용자 서비스 ID를 통해 해당 서비스 정보를 삭제")
-    @DeleteMapping("/{userServiceID}")
+    @DeleteMapping("/{user-service-id}")
     public ResponseEntity<String> deleteUserService(
-            @PathVariable("userServiceID")String userServiceID
+            @PathVariable("user-service-id")String userServiceID
     ){
         userService.deleteUserService(userServiceID);
         return ResponseEntity.ok("서비스 삭제 성공");
     }
 
     @Operation(summary = "사용자 서비스 수정", description = "사용자 서비스 ID를 통해 서비스에 대한 설명수정")
-    @PutMapping("userService")
+    @PutMapping("user-service")
     public ResponseEntity<String> updateUserService(
             @RequestParam("userServiceID")String userServiceID,
             @RequestParam("userServiceInfo")String userServiceInfo

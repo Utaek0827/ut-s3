@@ -2,6 +2,7 @@ package com.uts3back.mapper;
 
 import com.uts3back.dto.UserTotalServiceDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -9,6 +10,8 @@ import java.util.List;
 @Mapper
 public interface UserTotalServiceMapper {
 
-    List<UserTotalServiceDTO> userTotalServiceFind(String email);
+    UserTotalServiceDTO userTotalServiceFind(String email);
+
+    Integer calculateTotalImageSize(@Param("email")String email);
 
 }
