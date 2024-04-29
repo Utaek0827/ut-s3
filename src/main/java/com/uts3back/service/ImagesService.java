@@ -119,15 +119,15 @@ public class ImagesService {
         ImagesDTO imagesDTO = getImage(imgID); // 이미지 정보를 가져옴
 
         // 이미지 파일 경로 생성
-        Path imagePath = Paths.get(imageUploadDirectory +"/" + imagesDTO.getImgChanName() + "." + imagesDTO.getImgExt());
 
         // 파일 삭제 시도
         try {
+            Path imagePath = Paths.get(imageUploadDirectory +"/" + imagesDTO.getImgChanName() + "." + imagesDTO.getImgExt());
             Files.deleteIfExists(imagePath);
             imagesMapper.deleteImage(imgID);
             return true; // 파일 삭제 성공
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("파일 없음");
             return false; // 파일 삭제 실패
         }
     }
@@ -161,4 +161,17 @@ public class ImagesService {
         }
 
     }
+
+    public boolean checkRightImage(String email){
+
+        return imagesMapper.checkRightImage(email);
+    }
+
+    public String findEmailByImgID(String imgID){
+
+        return imagesMapper.findEmailByImgID(imgID);
+    }
+
+
+
 }

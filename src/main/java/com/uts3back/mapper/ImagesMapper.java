@@ -24,5 +24,9 @@ public interface ImagesMapper {
 
     List<ImagesDTO> getImagesByServiceID(@Param("serviceID") String serviceID, RowBounds rowBounds);
 
+    boolean checkRightImage(String email);
+
+    String findEmailByImgID(String imgID);
+
 
 }

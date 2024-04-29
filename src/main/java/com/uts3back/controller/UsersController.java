@@ -21,7 +21,6 @@ public class UsersController {
 
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
-
         System.out.println(email);
         List<UsersServiceDTO> usersServices = userService.getUsersServicesList(email);
 

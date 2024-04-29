@@ -37,6 +37,24 @@
         ORDER BY imgUptime DESC
     </select>
 
+    <select id="checkRightImage" parameterType="java.lang.String" resultType="boolean">
+        SELECT EXISTS (
+            SELECT 1
+            FROM UsersService US
+                     INNER JOIN Images I ON US.userServiceID = I.serviceID
+            WHERE US.email = #{email}
+        )
+    </select>
+
+    <select id="findEmailByImgID" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT US.email
+        FROM UsersService US
+                 INNER JOIN Images I ON US.userServiceID = I.serviceID
+        WHERE I.imgID = #{imgID}
+    </select>
+
+
+
 
 
 </mapper>

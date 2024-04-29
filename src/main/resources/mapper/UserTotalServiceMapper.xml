@@ -14,5 +14,12 @@
         )
     </select>
 
+    <!--갔다와서 하기 유효기간 확인-->
+    <select id="countByEmailAndValidServiceDate" resultType="int">
+        SELECT COUNT(*) FROM UserTotalService
+        WHERE email = #{email}
+          AND userStartDate &lt;= #{today}
+          AND userEndDate &gt;= #{today}
+    </select>
 
 </mapper>
