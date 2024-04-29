@@ -5,6 +5,8 @@ import com.uts3back.dto.UsersServiceDTO;
 import com.uts3back.mapper.UserTotalServiceMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class UserTotalServiceService {
 
@@ -12,6 +14,10 @@ public class UserTotalServiceService {
 
     public UserTotalServiceService(UserTotalServiceMapper userTotalServiceMapper, UserTotalServiceMapper userTotalServiceMapper1) {
         this.userTotalServiceMapper = userTotalServiceMapper;
+    }
+
+    public int CheckUserLicense(String email, Date today){
+        return userTotalServiceMapper.countByEmailAndValidServiceDate(email, today);
     }
 
     public UserTotalServiceDTO getUserTotalService(String email) {

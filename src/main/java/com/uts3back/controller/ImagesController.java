@@ -2,12 +2,15 @@ package com.uts3back.controller;
 
 import com.uts3back.dto.ImagesDTO;
 import com.uts3back.service.ImagesService;
+import com.uts3back.service.UserTotalServiceService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import java.util.Date;
+
 
 import java.util.List;
 
@@ -18,12 +21,20 @@ public class ImagesController {
     @Autowired
     ImagesService imagesService;
 
+    @Autowired
+    UserTotalServiceService userTotalServiceService;
+
     @Operation(summary = "이미지 업로드", description = "사용자가 선택한 이미지 업로드")
     @PostMapping(value = "/upload" , consumes = {"multipart/form-data"})
     public ResponseEntity<String> imageUpload(
             @RequestPart("file") MultipartFile file,
             @RequestPart("user-service-id") String userServiceID) throws Exception {
 
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Date today = new Date();
+        if(0 == userTotalServiceService.CheckUserLicense(email, today)){
+            return ResponseEntity.ok("유효기간이 올바르지 않습니다.");
+        }
 
         imagesService.uploadFileService(file, userServiceID);
         return ResponseEntity.ok("이미지 업로드 성공");

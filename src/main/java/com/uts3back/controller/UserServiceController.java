@@ -2,6 +2,7 @@ package com.uts3back.controller;
 
 import com.uts3back.dto.UsersServiceDTO;
 import com.uts3back.service.UserService;
+import com.uts3back.service.UserTotalServiceService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserServiceController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserTotalServiceService userTotalServiceService;
 
     @Operation(summary = "사용자 서비스 정보 조회", description = "사용자 서비스 ID를 통해 해당 서비스 정보를 조회합니다.")
     @GetMapping("/{user-service-id}")
@@ -29,8 +35,9 @@ public class UserServiceController {
             @RequestParam("userServiceInfo")String userServiceInfo){
 
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        if(userService.insertUserService(email, userServiceName, userServiceInfo) == null){
-            return ResponseEntity.ok("서비스 생성 실패");
+        Date today = new Date();
+        if(0 == userTotalServiceService.CheckUserLicense(email, today)){
+            return ResponseEntity.ok("유효기간이 올바르지 않습니다.");
         }
         return ResponseEntity.ok("서비스 생성 성공");
     }
