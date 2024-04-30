@@ -26,4 +26,16 @@
         VALUES (#{usID}, #{email}, #{userTotalCap}, #{userUsageCap}, #{userStartDate}, #{userEndDate})
     </insert>
 
+    <update id="updateUserTotalService" parameterType="com.uts3back.dto.UserTotalServiceDTO">
+        UPDATE UserTotalService
+        SET
+        email = #{email},
+        userTotalCap = #{userTotalCap},
+        userUsageCap = #{userUsageCap},
+        userStartDate = #{userStartDate},
+        userEndDate = #{userEndDate}
+        WHERE usID = #{usID}
+    </update>
+
+
 </mapper>

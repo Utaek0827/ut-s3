@@ -34,6 +34,11 @@
         WHERE userServiceID = #{userServiceID}
     </update>
 
+    <select id="findEmailByServiceID" resultType="String" parameterType="String">
+        SELECT email FROM UsersService WHERE UserServiceID = #{userServiceID}
+    </select>
+
+
 
 
 </mapper>

@@ -24,8 +24,14 @@ public class UserServiceController {
 
     @Operation(summary = "사용자 서비스 정보 조회", description = "사용자 서비스 ID를 통해 해당 서비스 정보를 조회합니다.")
     @GetMapping("/{user-service-id}")
-    public UsersServiceDTO userService(@PathVariable("user-service-id")String userServiceID){
-        return userService.getUsersService(userServiceID);
+    public ResponseEntity userService(@PathVariable("user-service-id")String userServiceID){
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if (!userService.findEmailByServiceID(email,userServiceID)) {
+            return ResponseEntity.status(403).body("권한이 없습니다.");
+        }
+
+        return ResponseEntity.ok(userService.getUsersService(userServiceID));
     }
 
     @Operation(summary = "사용자 서비스 생성", description = "사용자 서비스 생성 서비스 이름과 서비스 설명작성")
@@ -47,6 +53,12 @@ public class UserServiceController {
     public ResponseEntity<String> deleteUserService(
             @PathVariable("user-service-id")String userServiceID
     ){
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if (!userService.findEmailByServiceID(email,userServiceID)) {
+            return ResponseEntity.status(403).body("권한이 없습니다.");
+        }
         userService.deleteUserService(userServiceID);
         return ResponseEntity.ok("서비스 삭제 성공");
     }
@@ -58,6 +70,11 @@ public class UserServiceController {
             @RequestParam("userServiceInfo")String userServiceInfo
 
     ){
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if (!userService.findEmailByServiceID(email,userServiceID)) {
+            return ResponseEntity.status(403).body("권한이 없습니다.");
+        }
         userService.updateUserService(userServiceID,userServiceInfo);
         return ResponseEntity.ok("서비스 수정 성공");
     }

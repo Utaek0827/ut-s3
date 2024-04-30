@@ -12,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/images")
@@ -36,8 +38,20 @@ public class ImagesController {
             return ResponseEntity.ok("유효기간이 올바르지 않습니다.");
         }
 
-        imagesService.uploadFileService(file, userServiceID);
-        return ResponseEntity.ok("이미지 업로드 성공");
+        Map res = new HashMap<>();
+
+        res.put("kind",0);
+        res.put("email",email);
+        res.put("imgSize",file.getSize());
+
+        boolean imgSizeRes = userTotalServiceService.correctionImgSize(res);
+
+        if(imgSizeRes){
+            imagesService.uploadFileService(file, userServiceID);
+            return ResponseEntity.ok("이미지 업로드 성공");
+        }else{
+            return ResponseEntity.ok("이미지 크기를 확인하세요");
+        }
     }
     // 수정 컨트롤러 추가
     @Operation(summary = "이미지 수정", description = "이미지 정보 수정")
@@ -51,9 +65,22 @@ public class ImagesController {
         if (!imagesService.findEmailByImgID(imgID).equals(email)) {
             return ResponseEntity.status(403).body("이미지 수정 권한이 없습니다.");
         }
+
+        Map res = new HashMap<>();
+        res.put("kind",1);
+        res.put("email",email);
+        res.put("imgSize",file.getSize());
+        res.put("imgOriSize",imagesService.getImage(imgID).getImgSize());
+
+        boolean imgSizeRes = userTotalServiceService.correctionImgSize(res);
+
+        if(imgSizeRes){
+            imagesService.updateImage(imgID, file);
+            return ResponseEntity.ok("이미지 수정 완료");
+        }else{
+            return ResponseEntity.ok("이미지 크기를 확인하세요");
+        }
         
-        imagesService.updateImage(imgID, file);
-        return ResponseEntity.ok("이미지 수정 완료");
     }
     // 삭제 컨트롤러 추가
     @Operation(summary = "이미지 삭제", description = "이미지 삭제")
@@ -66,6 +93,13 @@ public class ImagesController {
         if (!imagesService.findEmailByImgID(imgID).equals(email)) {
             return ResponseEntity.status(403).body("이미지 삭제 권한이 없습니다.");
         }
+
+        Map res = new HashMap<>();
+        res.put("kind",2);
+        res.put("email",email);
+        res.put("imgOriSize",imagesService.getImage(imgID).getImgSize());
+
+        userTotalServiceService.correctionImgSize(res);
 
         if(imagesService.deleteImage(imgID)){
             return ResponseEntity.ok("이미지 삭제 완료");

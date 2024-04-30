@@ -79,4 +79,9 @@ public class UserService {
 
         usersServiceMapper.updateUsersService(usersServiceDTO);
     }
+
+    public boolean findEmailByServiceID(String email,String userServiceID) {
+
+        return usersServiceMapper.findEmailByServiceID(userServiceID).equals(email);
+    }
 }

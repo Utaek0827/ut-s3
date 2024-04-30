@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -50,6 +51,42 @@ public class UserTotalServiceService {
         //토탈서비스 생성
 
         return userTotalServiceDTO;
+
+    }
+
+    public boolean correctionImgSize(Map res) {
+        UserTotalServiceDTO userTotalServiceDTO = userTotalServiceMapper.userTotalServiceFind((String)res.get("email"));
+
+        System.out.println(res.get("imgOriSize"));
+        long correctionSize = 0;
+
+        // 업로드 -- 0, 수정 -- 1, 삭제 -- 2
+        int kind = (int)res.get("kind");
+
+        // 업로드 일 경우 기존용량에 이미지 크기 더하기
+        // 수정일 경우 원래 파일크기 빼고 새로운 파일크기 더하기
+        if(kind == 1){
+            correctionSize = userTotalServiceDTO.getUserUsageCap() + (long)res.get("imgSize") - (long)res.get("imgOriSize");
+        }else if(kind == 0){
+            correctionSize = userTotalServiceDTO.getUserUsageCap() + (long)res.get("imgSize");
+        }else if(kind == 2){
+            correctionSize = userTotalServiceDTO.getUserUsageCap() - (long)res.get("imgOriSize");
+        }
+
+        // 전체용량보다 수정된 용량이 크면 false 리턴
+        if(userTotalServiceDTO.getUserTotalCap() <= correctionSize){
+            return false;
+        }
+
+        // 아니면 용량 업데이트 후 true 리턴
+        userTotalServiceDTO.setUserUsageCap(correctionSize);
+        userTotalServiceMapper.updateUserTotalService(userTotalServiceDTO);
+
+        System.out.println(userTotalServiceDTO);
+
+        return true;
+
+
 
     }
 }

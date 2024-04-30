@@ -18,4 +18,7 @@ public interface UserTotalServiceMapper {
     int countByEmailAndValidServiceDate(@Param("email") String email, @Param("today") Date today);
 
     void insertUserTotalService(UserTotalServiceDTO userTotalServiceDTO);
+
+    void updateUserTotalService(UserTotalServiceDTO userTotalServiceDTO);
+
 }

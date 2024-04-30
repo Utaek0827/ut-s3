@@ -15,7 +15,9 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -73,9 +75,6 @@ public class ImagesService {
         imagesDTO.setImgSize(imgSize);
 
         imagesMapper.insertImage(imagesDTO);
-
-        // 이미지 전송까지는 확인
-        // 자고나서 할거 -> db에 저장한 이미지 저장
 
     }
 
