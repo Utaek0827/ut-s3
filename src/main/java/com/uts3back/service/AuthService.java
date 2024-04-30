@@ -18,6 +18,8 @@ public class AuthService implements UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UsersMapper usersMapper;
 
+
+
     public AuthService(BCryptPasswordEncoder bCryptPasswordEncoder, UsersMapper usersMapper) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.usersMapper = usersMapper;
@@ -26,6 +28,7 @@ public class AuthService implements UserDetailsService {
     public void signUp(UsersDTO usersDTO) {
         usersDTO.setPassword(bCryptPasswordEncoder.encode(usersDTO.getPassword()));
         usersDTO.setRole("ROLE_USER");
+
         usersMapper.insertUser(usersDTO);
     }
 

@@ -3,6 +3,7 @@ package com.uts3back.controller;
 import com.uts3back.dto.LoginRequest;
 import com.uts3back.dto.UsersDTO;
 import com.uts3back.service.AuthService;
+import com.uts3back.service.UserTotalServiceService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,9 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private UserTotalServiceService userTotalServiceService;
 
     @Operation(summary = "로그인", description = "로그인 페이지")
     @PostMapping("/sign-in")
@@ -28,13 +32,14 @@ public class AuthController {
 
     @Operation(summary = "회원가입", description = "회원가입 페이지")
     @PostMapping("/sign-up")
-    public String signUp(
+    public ResponseEntity signUp(
             @RequestBody UsersDTO SignUpUsers
             ){
 
         authService.signUp(SignUpUsers);
+        userTotalServiceService.insertUserTotalService(SignUpUsers.getEmail());
         System.out.println(SignUpUsers);
-        return "email+password";
+        return ResponseEntity.ok("회원가입 완료");
     }
 
     /*

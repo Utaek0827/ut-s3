@@ -14,12 +14,16 @@
         )
     </select>
 
-    <!--갔다와서 하기 유효기간 확인-->
     <select id="countByEmailAndValidServiceDate" resultType="int">
         SELECT COUNT(*) FROM UserTotalService
         WHERE email = #{email}
           AND userStartDate &lt;= #{today}
           AND userEndDate &gt;= #{today}
     </select>
+
+    <insert id="insertUserTotalService" parameterType="com.uts3back.dto.UserTotalServiceDTO">
+        INSERT INTO UserTotalService (usID, email, userTotalCap, userUsageCap, userStartDate, userEndDate)
+        VALUES (#{usID}, #{email}, #{userTotalCap}, #{userUsageCap}, #{userStartDate}, #{userEndDate})
+    </insert>
 
 </mapper>
